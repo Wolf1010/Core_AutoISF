@@ -51,7 +51,6 @@ extension Bolus {
                             }
                     }
                 }
-
                 if !state.waitForSuggestion {
                     Section(header: Text("Bolus")) {
                         HStack {
