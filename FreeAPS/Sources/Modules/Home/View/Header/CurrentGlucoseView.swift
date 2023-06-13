@@ -176,15 +176,28 @@ struct CurrentGlucoseView: View {
         let whichGlucose = recentGlucose?.glucose ?? 0
         guard lowGlucose < highGlucose else { return .loopYellow }
 
-        switch whichGlucose {
-        case 55 ..< Int(lowGlucose):
-            return .loopOrange
-        case Int(lowGlucose) ..< 140:
-            return .loopGreen
-        case 141 ..< Int(highGlucose):
-            return .loopYellow
-        default:
-            return .loopRed
+        if highGlucose > 141 && lowGlucose > 55 && lowGlucose < 141               f {
+            switch whichGlucose {
+            case 55 ..< Int(lowGlucose):
+                return .loopOrange
+            case Int(lowGlucose) ..< 141:
+                return .loopGreen
+            case 141 ..< Int(highGlucose):
+                return .loopYellow
+            default:
+                return .loopRed
+            }
+        } else {
+            switch whichGlucose {
+            case 0 ..< Int(lowGlucose):
+                return .loopRed
+            case Int(lowGlucose) ..< Int(highGlucose):
+                return .loopGreen
+            case Int(highGlucose)...:
+                return .loopOrange
+            default:
+                return .loopRed
+            }
         }
     }
 }
