@@ -2,12 +2,9 @@
 
 ## Introduction
 
-iAPS - an artificial pancreas system for iOS based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms (Master 0.7.1) and Ivan Valkous stale Swift repo, freeaps.git.
+iAPS - an artificial pancreas system for iOS based on [OpenAPS Reference](https://github.com/openaps/oref0)
 
-Thousands of commits later, with many new and unique features added, the iOS app has been renamed to iAPS under a new organisation, Artificial Pancreas. iAPS uses lot of frameworks published by the Loop community.
-
-
-# autoISF
+## autoISF
 The autoISF branch is based on dev from the original [iAPS repo](https://github.com/artificial-pancreas/iaps) and includes my implementation of [autoISF by ga-zelle](https://github.com/T-o-b-i-a-s/AndroidAPS) for AAPS and some other extra features. autoISF is off by default.
 
 autoISF adjusts ISF depending on 4 different effects in glucose behaviour that autoISF checks and reacts to:
