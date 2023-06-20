@@ -28,7 +28,7 @@ extension Stat {
             var id: Self { self }
         }
 
-        @State private var selectedDuration: Duration = .Today
+        @State private var selectedDuration: Duration = .Day
         @State var paddingAmount: CGFloat? = 10
         @State var headline: Color = .secondary
         @State var days: Double = 0
