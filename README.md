@@ -92,7 +92,6 @@ Also note that you can achieve almost everything that Profiles do with the Advan
 
 * 2.2.1
 	* Bolus Calculator based on EventualBG
-	* Refactored the new bolus calculator.
 	* and many more refer to [original release notes]( https://github.com/Artificial-Pancreas/iAPS/releases/tag/v2.2.1)
 * 2.0.1
 	* many localizations and crowdin re-ntegration
