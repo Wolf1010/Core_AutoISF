@@ -38,4 +38,5 @@
       "useFPUconversion" : false,
       "displayOnWatch" : "isf",
       "animatedBackground" : false
+      "maxCarbs": 1000
 }

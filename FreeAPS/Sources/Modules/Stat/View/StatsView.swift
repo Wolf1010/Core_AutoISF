@@ -179,10 +179,10 @@ struct StatsView: View {
             // Last date (recent)
             let current = glucose.first?.date ?? Date()
             // Total time in days
-            let numberOfMinutes = (current - previous).timeInterval / 8.64E4 * 24 * 60
+            let numberOfDays = (current - previous).timeInterval / 8.64E4
 
             VStack(spacing: 5) {
-                Text(numberOfMinutes < 1430 ? "Readings today" : "Readings / 24h").font(.subheadline)
+                Text(numberOfDays < 1 ? "Readings" : "Readings / 24h").font(.subheadline)
                     .foregroundColor(.secondary)
                 Text(bgs.readings.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))))
             }
