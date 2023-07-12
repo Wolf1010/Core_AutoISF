@@ -75,7 +75,7 @@ struct MainView: View {
             HStack(alignment: .lastTextBaseline) {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(alignment: .bottom) {
-                        Text(state.glucose).font(.largeTitle).foregroundColor(colorOfGlucose)
+                        Text(state.glucose).font(.title).foregroundColor(colorOfGlucose)
                             .scaledToFill()
                             .minimumScaleFactor(0.5)
                         // .padding(.top, 2)
@@ -110,7 +110,11 @@ struct MainView: View {
                 Spacer()
                 VStack(spacing: 0) {
                     HStack {
-                        Circle().stroke(color, lineWidth: 5).frame(width: 26, height: 26).padding(10)
+                        Circle().stroke(color, lineWidth: 5)
+                            .frame(width: 20, height: 20)
+                            .padding(.bottom, 10)
+                            .padding(.leading, 10)
+                            .padding(.trailing, 4)
                     }
 
                     if state.lastLoopDate != nil {
@@ -123,7 +127,7 @@ struct MainView: View {
             Spacer()
             HStack(alignment: .firstTextBaseline) {
                 Text(iobFormatter.string(from: (state.cob ?? 0) as NSNumber)!)
-                    .font(.caption2)
+                    .font(.title3)
                     .scaledToFill()
                     .foregroundColor(Color.white)
                     .minimumScaleFactor(0.5)
@@ -133,7 +137,7 @@ struct MainView: View {
                     .minimumScaleFactor(0.5)
                 Spacer()
                 Text(iobFormatter.string(from: (state.iob ?? 0) as NSNumber)!)
-                    .font(.caption2)
+                    .font(.title3)
                     .scaledToFill()
                     .foregroundColor(Color.white)
                     .minimumScaleFactor(0.5)
@@ -177,7 +181,7 @@ struct MainView: View {
                         Spacer()
                         HStack {
                             Text(eventualBG)
-                                .font(.caption2)
+                                .font(.title3)
                                 .scaledToFill()
                                 .foregroundColor(.secondary)
                                 .minimumScaleFactor(0.5)
@@ -188,7 +192,7 @@ struct MainView: View {
                     HStack {
                         Text("🦶" + " \(steps)")
                             .fontWeight(.regular)
-                            .font(.caption2)
+                            .font(.title3)
                             .scaledToFill()
                             .foregroundColor(.white)
                             .minimumScaleFactor(0.5)
@@ -204,7 +208,7 @@ struct MainView: View {
                             .foregroundColor(.loopGreen)
                         Text("\(isf)")
                             .fontWeight(.regular)
-                            .font(.caption2)
+                            .font(.title3)
                             .scaledToFill()
                             .foregroundColor(.white)
                             .minimumScaleFactor(0.5)
