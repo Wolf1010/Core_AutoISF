@@ -825,8 +825,9 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
 
                 var algo_ = "Oref0"
-
-                if preferences.sigmoid, preferences.enableDynamicCR {
+                if preferences.autoisf {
+                    algo_ = "autoISF"
+                } else if preferences.sigmoid, preferences.enableDynamicCR {
                     algo_ = "Dynamic ISF + CR: Sigmoid"
                 } else if preferences.sigmoid, !preferences.enableDynamicCR {
                     algo_ = "Dynamic ISF: Sigmoid"
