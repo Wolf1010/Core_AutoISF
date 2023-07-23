@@ -44,15 +44,6 @@ Title text for the button to remove a CGM from Loop */
 /* Title describing past sensor expiration */
 "Sensor Expired" = "Sensor verlopen";
 
-/* Section title for remote data synchronization */
-"Remote Data Synchronization" = "Remote Gegevenssynchronisatie";
-
-/* Title describing sensor expiration */
-"Sensor Expires" = "Sensor Verloopt";
-
-/* Title describing past sensor expiration */
-"Sensor Expired" = "Sensor Verlopen";
-
 /* Title describing CGM calibration and battery state */
 "Status" = "Status";
 

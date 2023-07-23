@@ -204,11 +204,22 @@ struct MainView: View {
                         Image(systemName: "arrow.up.arrow.down")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 13, height: 13)
+                            .frame(width: 12, height: 12)
                             .foregroundColor(.loopGreen)
                         Text("\(isf)")
                             .fontWeight(.regular)
                             .font(.title3)
+                            .scaledToFill()
+                            .foregroundColor(.white)
+                            .minimumScaleFactor(0.5)
+                    }
+                case .override:
+                    Spacer()
+                    let override: String = state.override != nil ? state.override! : "-"
+                    HStack {
+                        Text("👤 \(override)")
+                            .fontWeight(.regular)
+                            .font(.caption2)
                             .scaledToFill()
                             .foregroundColor(.white)
                             .minimumScaleFactor(0.5)
@@ -268,8 +279,11 @@ struct MainView: View {
     var buttons: some View {
         HStack(alignment: .center) {
             NavigationLink(isActive: $state.isCarbsViewActive) {
-                CarbsView()
-                    .environmentObject(state)
+                if state.isNutrientsViewEnabled {
+                    NutrientsView().environmentObject(state)
+                } else {
+                    CarbsView().environmentObject(state)
+                }
             } label: {
                 Image("carbs1", bundle: nil)
                     .renderingMode(.template)

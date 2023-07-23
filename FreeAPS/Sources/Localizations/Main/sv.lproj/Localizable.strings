@@ -348,25 +348,25 @@ Enact a temp Basal or a temp target */
 "U/hr" = "IE/h";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " IE";
+" U" = " E";
 
 /* /Insulin unit */
-"/U" = "/IE";
+"/U" = "/E";
 
 /* Insulin unit */
-"U" = "IE";
+"U" = "E";
 
 /* Unit per hour with space */
-" U/hr" = " IE/h";
+" U/hr" = " E/h";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ IE/h";
+"%@ U/hr" = "%@ E/h";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ IE";
+"%@ U" = "%@ E";
 
 /*Carb ratio unit */
-"g/U" = "g/IE";
+"g/U" = "g/E";
 
 /* grams */
 " g" = " g";
@@ -375,7 +375,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 IE/h";
+"0 U/hr" = "0 E/h";
 
 /* abbreviation for days */
 "d" = "d";
@@ -1087,7 +1087,7 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "För att kunna skriva data till Apple Hälsa måste du först ge din tillåtelse i Inställningar > Hälsa > Datatillgång och enheter";
 
 /* */
-"After you create glucose records in the Health app, please open iAPS to help us guaranteed transfer changed data" = "Efter att du lagt till glukos i appen 'Hälsa', öppna iAPS för att bekräfta att överföring skett på rätt sätt";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Efter att du lagt till glukos i appen 'Hälsa', öppna iAPS för att bekräfta att överföring skett på rätt sätt";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1163,8 +1163,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Normal " = "Normal ";
-
-"Currently no Override active" = "Inget undantag aktivt";
 
 /* */
 "Total Insulin Adjustment" = "Total justering av ditt insulinbehov";
@@ -1297,8 +1295,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Insulin Sensitivity" = "Insulinkänslighet";
 
-/* Formuala displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF =" = "(Blodsockerprognos - Målvärde) / ISF =";
+/* Formula displayed in Bolus info pop-up. Make translation short! */
+"(Eventual Glucose - Target) / ISF" = "(Blodsockerprognos - Målvärde) / ISF";
 
 /* */
 "Formula:" = "Formel:";
@@ -1316,16 +1314,13 @@ Enact a temp Basal or a temp target */
 "which is below your Threshold (" = "vilket är lägre än ditt tröskelvärde (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"is below Threshold of " = "är under tröskelvärde ";
-
-/* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men blodsocker stiger långsammare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Prognos > Målvärde, men ditt blodsocker stiger långsammare än väntat. Förväntat: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Stiger: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Prognos > Målvärde, men blodsocker sjunker snabbare än väntat. Förväntat: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Prognos > målvärde, men blodsocker sjunker snabbare än väntat. Förväntat: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Sjunker: ";
@@ -1481,8 +1476,6 @@ Enact a temp Basal or a temp target */
 /* ----------------------Statistics strings -------------------------------*/
 /* */
 
-
-"Today" = "Idag";
 
 "Today" = "Idag";
 

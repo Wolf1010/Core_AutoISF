@@ -9,6 +9,13 @@ enum AwConfig: String, CaseIterable, Identifiable, Codable {
     case BGTarget
     case steps
     case isf
+    case override
+}
+
+enum Nutrient: Encodable {
+    case carbs
+    case protein
+    case fat
 }
 
 class WatchStateModel: NSObject, ObservableObject {
@@ -35,6 +42,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var isTempTargetViewActive = false
     @Published var isBolusViewActive = false
     @Published var displayOnWatch: AwConfig = .BGTarget
+    @Published var isNutrientsViewEnabled = false
     @Published var eventualBG = ""
     @Published var isConfirmationViewActive = false {
         didSet {
@@ -57,6 +65,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var pendingBolus: Double?
 
     @Published var isf: Decimal?
+    @Published var override: String?
 
     private var lifetime = Set<AnyCancellable>()
     private var confirmationTimeout: AnyCancellable?
@@ -83,6 +92,36 @@ class WatchStateModel: NSObject, ObservableObject {
             }
         }) { error in
             print(error.localizedDescription)
+            DispatchQueue.main.async {
+                self.confirmation(false)
+            }
+        }
+    }
+
+    func addNutrients(_ nutrients: [Nutrient: Int]) {
+        confirmationSuccess = nil
+        isConfirmationViewActive = true
+        isCarbsViewActive = false
+
+        if let nutrients = try? JSONEncoder().encode(nutrients) {
+            session.sendMessage(
+                ["addNutrients": nutrients],
+                replyHandler: { reply in
+                    self.completionHandler(reply)
+                    if let ok = reply["confirmation"] as? Bool, ok, self.bolusAfterCarbs {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            self.isBolusViewActive = true
+                        }
+                    }
+                }
+            ) { error in
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.confirmation(false)
+                }
+            }
+        } else {
+            print("Error encoding nutrients dictionary")
             DispatchQueue.main.async {
                 self.confirmation(false)
             }
@@ -177,7 +216,9 @@ class WatchStateModel: NSObject, ObservableObject {
         lastUpdate = Date()
         eventualBG = state.eventualBG ?? ""
         displayOnWatch = state.displayOnWatch ?? .BGTarget
+        isNutrientsViewEnabled = state.isNutrientsViewEnabled ?? false
         isf = state.isf
+        override = state.override
     }
 }
 

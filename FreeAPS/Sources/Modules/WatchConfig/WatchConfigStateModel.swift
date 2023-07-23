@@ -7,6 +7,7 @@ enum AwConfig: String, JSON, CaseIterable, Identifiable, Codable {
     case BGTarget
     case steps
     case isf
+    case override
 
     var displayName: String {
         switch self {
@@ -18,6 +19,8 @@ enum AwConfig: String, JSON, CaseIterable, Identifiable, Codable {
             return NSLocalizedString("Steps", comment: "")
         case .isf:
             return NSLocalizedString("ISF", comment: "")
+        case .override:
+            return NSLocalizedString("% Override", comment: "")
         }
     }
 }
@@ -27,6 +30,7 @@ extension WatchConfig {
         @Injected() private var garmin: GarminManager!
         @Published var devices: [IQDevice] = []
         @Published var selectedAwConfig: AwConfig = .HR
+        @Published var isNutrientsViewEnabled = false
 
         private(set) var preferences = Preferences()
 
@@ -43,6 +47,8 @@ extension WatchConfig {
                     self?.settingsManager.settings.displayHR = false
                 }
             }
+
+            subscribeSetting(\.isNutrientsViewEnabled, on: $isNutrientsViewEnabled) { isNutrientsViewEnabled = $0 }
 
             devices = garmin.devices
         }

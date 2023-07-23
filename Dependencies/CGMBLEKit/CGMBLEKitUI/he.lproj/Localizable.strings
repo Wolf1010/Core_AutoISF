@@ -38,9 +38,6 @@ Title text for the button to remove a CGM from Loop */
 /* Section title for remote data synchronization */
 "Remote Data Synchronization" = "Remote Data Synchronization";
 
-/* Section title for remote data synchronization */
-"Remote Data Synchronization" = "Remote Data Synchronization";
-
 /* Title describing sensor expiration */
 "Sensor Expires" = "Sensor Expires";
 

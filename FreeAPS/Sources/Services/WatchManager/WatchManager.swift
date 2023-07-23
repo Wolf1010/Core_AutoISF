@@ -1,8 +1,15 @@
+import CoreData
 import Foundation
 import Swinject
 import WatchConnectivity
 
 protocol WatchManager {}
+
+enum Nutrient: Decodable {
+    case carbs
+    case protein
+    case fat
+}
 
 final class BaseWatchManager: NSObject, WatchManager, Injectable {
     private let session: WCSession
@@ -17,6 +24,10 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var garmin: GarminManager!
+
+    @Published var date = Date()
+
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
 
     private var lifetime = Lifetime()
 
@@ -104,12 +115,28 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
 
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
+            self.state.isNutrientsViewEnabled = self.settingsManager.settings.isNutrientsViewEnabled
 
             let eBG = self.evetualBGStraing()
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
             self.state.eventualBGRaw = eBG
 
             self.state.isf = self.suggestion?.isf
+
+            var overrideArray = [Override]()
+            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestOverrides.sortDescriptors = [sortOverride]
+            requestOverrides.fetchLimit = 1
+            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+
+            if overrideArray.first?.enabled ?? false {
+                let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
+                self.state.override = percentString
+
+            } else {
+                self.state.override = "100 %"
+            }
 
             self.sendState()
         }
@@ -270,6 +297,53 @@ extension BaseWatchManager: WCSessionDelegate {
                     }
                     .store(in: &lifetime)
                 return
+            }
+        }
+
+        if let nutrientsData = message["addNutrients"] as? Data {
+            if let nutrients = try? JSONDecoder().decode([Nutrient: Int].self, from: nutrientsData) {
+                if nutrients.values.contains(where: { $0 > 0 }) {
+                    let carbs = min(Decimal(nutrients[.carbs] ?? 0), settingsManager.settings.maxCarbs)
+                    let protein = Decimal(nutrients[.protein] ?? 0)
+                    let fat = Decimal(nutrients[.fat] ?? 0)
+
+                    var useFPUconversion: Bool {
+                        protein > 0 || fat > 0
+                    }
+
+                    if useFPUconversion {
+                        let futureCarbArray = calculateFPU(settings: settingsManager, protein: protein, fat: fat)
+                        if !futureCarbArray.isEmpty {
+                            carbsStorage.storeCarbs(futureCarbArray)
+                        }
+                    }
+
+                    if carbs > 0 {
+                        // Store the real carbs
+                        carbsStorage.storeCarbs([
+                            CarbsEntry(
+                                id: UUID().uuidString,
+                                createdAt: Date(),
+                                carbs: carbs,
+                                enteredBy: CarbsEntry.manual,
+                                isFPU: false, fpuID: nil
+                            )
+                        ])
+                    }
+
+                    if settingsManager.settings.skipBolusScreenAfterCarbs {
+                        apsManager.determineBasalSync()
+                        replyHandler(["confirmation": true])
+                        return
+                    } else {
+                        apsManager.determineBasal()
+                            .sink { _ in
+                                replyHandler(["confirmation": true])
+                            }
+                            .store(in: &lifetime)
+                        return
+                    }
+                }
             }
         }
 

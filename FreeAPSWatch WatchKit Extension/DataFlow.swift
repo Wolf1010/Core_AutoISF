@@ -24,7 +24,9 @@ struct WatchState: Codable {
     var eventualBG: String?
     var eventualBGRaw: String?
     var displayOnWatch: AwConfig?
+    var isNutrientsViewEnabled: Bool?
     var isf: Decimal?
+    var override: String?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {
